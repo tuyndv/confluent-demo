@@ -17,7 +17,7 @@ ARG REPOSITORY
 ARG CP_VERSION
 
 # Stage 1 -- install connectors
-FROM $REPOSITORY/cp-server-connect:$CP_VERSION AS install-connectors
+FROM confluentinc/cp-server-connect:7.2.1 AS install-connectors
 
 ENV CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
 
@@ -32,6 +32,6 @@ RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:1
 
 
 # Stage 2 -- copy jars
-FROM $REPOSITORY/cp-server-connect:$CP_VERSION
+FROM confluentinc/cp-server-connect:7.2.1
 
 COPY --from=install-connectors /usr/share/confluent-hub-components/ /usr/share/confluent-hub-components/
